@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.shop.dao.ArticleDao">
+
+    <resultMap id="baseMap" type="com.hr.shop.entity.Article">
+        <id column="id" property="id"/>
+        <result column="type_code" property="typeCode"/>
+        <result column="title" property="title"/>
+        <result column="supplier" property="supplier"/>
+        <result column="price" property="price"/>
+        <result column="discount" property="discount"/>
+        <result column="locality" property="locality"/>
+        <result column="putaway_date" property="putawayDate"/>
+        <result column="storage" property="storage"/>
+        <result column="image" property="image"/>
+        <result column="description" property="description"/>
+        <result column="createDate" property="createDate"/>
+        <result column="disabled" property="disabled"/>
+    </resultMap>
+
+    <update id="updateStorage">
+        update ec_article
+        set STORAGE = STORAGE + (#{param1})
+        where ID = #{param2}
+    </update>
+
+    <select id="findAll" resultMap="baseMap">
+        select * from ec_article
+    </select>
+
+    <select id="findOneById" resultMap="baseMap">
+        select * from ec_article
+        where ID = #{id}
+    </select>
+
+</mapper>

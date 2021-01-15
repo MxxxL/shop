@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.shop.dao.OrderItemDao">
+
+    <resultMap id="resultMap" type="com.hr.shop.entity.OrderItem">
+        <id column="ORDER_ID" property="orderId"/>
+        <result column="ARTICLE_ID" property="articleId"/>
+        <result column="ORDER_NUM" property="orderNum"/>
+    </resultMap>
+
+    <insert id="insert">
+        insert into ec_order_item
+        values (#{orderId},#{articleId},#{orderNum})
+    </insert>
+
+
+</mapper>

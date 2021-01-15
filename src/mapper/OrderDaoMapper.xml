@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.shop.dao.OrderDao">
+    <resultMap id="BaseResultMap" type="com.hr.shop.entity.Order">
+        <id column="ID" property="id"/>
+        <result column="ORDER_CODE" property="orderCode"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="SEND_DATE" property="sendDate"/>
+        <result column="STATUS" property="status"/>
+        <result column="AMOUNT" property="amount"/>
+        <result column="USER_ID" property="userId"/>
+        <collection property="orderItems"
+                    ofType="com.hr.shop.entity.OrderItem"
+                    column="ORDER_ID">
+            <id column="ORDER_ID" property="orderId"/>
+            <id column="ARTICLE_ID" property="articleId"/>
+            <result column="ORDER_NUM" property="orderNum"/>
+            <result column="image" property="image"/>
+            <result column="title" property="title"/>
+            <result column="supplier" property="supplier"/>
+            <result column="price" property="price"/>
+            <result column="discount" property="discount"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into ec_order
+        values (default, #{orderCode}, #{createDate},
+                #{sendDate}, #{status}, #{amount}, #{userId})
+    </insert>
+
+    <select id="selectOrderByUserId" resultMap="BaseResultMap">
+        select o.*,t.*,a.IMAGE,a.TITLE,a.SUPPLIER,a.PRICE,a.DISCOUNT
+        from ec_order o
+        join ec_order_item t on t.ORDER_ID = o.ID
+        join ec_article a on a.ID = t.ARTICLE_ID
+        where o.USER_ID = #{userId}
+        order by o.CREATE_DATE desc
+    </select>
+
+</mapper>

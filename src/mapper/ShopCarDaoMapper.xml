@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.shop.dao.ShopCarDao">
+
+    <resultMap id="baseMap" type="com.hr.shop.entity.ShopCar">
+        <id column="ID" property="id"/>
+        <result column="articleId" property="articleId"/>
+        <result column="buyNum" property="buyNum"/>
+        <result column="userId" property="userId"/>
+        <result column="IMAGE" property="image"/>
+        <result column="TITLE" property="title"/>
+        <result column="PRICE" property="price"/>
+        <result column="DISCOUNT" property="discount"/>
+        <result column="STORAGE" property="storage"/>
+    </resultMap>
+
+    <sql id="common">
+        SELECT c.*,a.IMAGE,a.TITLE,a.PRICE,a.DISCOUNT,a.STORAGE
+        FROM `ec_shopcar` c
+        JOIN ec_article a ON c.articleId = a.ID
+    </sql>
+    <delete id="delQty">
+        delete from ec_shopcar
+        where ID = #{id}
+    </delete>
+
+    <select id="findById" resultMap="baseMap">
+        <include refid="common"/>
+        where c.ID = #{id}
+    </select>
+
+    <select id="findListByUserId" resultMap="baseMap">
+        <include refid="common"/>
+        WHERE c.userId = #{userId}
+    </select>
+
+    <select id="selectByIds" resultMap="baseMap">
+        <include refid="common"/>
+        where c.id in
+        <foreach collection="ids" item="idsItem" open="(" separator="," close=")">
+            #{idsItem}
+        </foreach>
+
+    </select>
+
+    <insert id="add" parameterType="com.hr.shop.entity.ShopCar">
+        insert into ec_shopcar
+        values (default, #{articleId}, #{buyNum}, #{userId})
+    </insert>
+
+    <update id="edit" parameterType="com.hr.shop.entity.ShopCar">
+        update ec_shopcar
+        set articleId=#{articleId},
+            buyNum   = #{buyNum},
+            userId=#{userId}
+        where ID = #{id}
+    </update>
+
+    <update id="editQty">
+        update ec_shopcar
+        set buyNum  = #{param1}
+        where articleId=#{param2} and userId=#{param3}
+    </update>
+
+</mapper>

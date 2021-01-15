@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.shop.dao.UserDao">
+
+    <resultMap id="baseMap" type="com.hr.shop.entity.User">
+        <id column="id" property="id"/>
+        <result column="login_name" property="loginName"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="role" property="role"/>
+        <result column="create_date" property="createDate"/>
+        <result column="disabled" property="disabled"/>
+        <result column="active" property="active"/>
+    </resultMap>
+
+
+    <select id="login" resultMap="baseMap">
+        select * from ec_user
+        where login_name = #{param1} and password = #{param2}
+    </select>
+
+    <insert id="register" parameterType="com.hr.shop.entity.User">
+        insert into ec_user
+        values(default,#{loginName},#{password},#{name},#{sex},
+        #{email},#{phone},#{address},#{role},#{createDate},0,null)
+    </insert>
+</mapper>
