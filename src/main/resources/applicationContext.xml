@@ -15,15 +15,15 @@
      http://www.springframework.org/schema/tx
      http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-
     <context:component-scan base-package="com.hr.shop.service.impl"/>
 
+    <context:property-placeholder location="jdbc.properties"/>
+
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url"
-                  value="jdbc:mysql://localhost:3306/hr_shop?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;characterEncoding=utf-8"/>
-        <property name="username" value="root"/>
-        <property name="password" value="123456"/>
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
     </bean>
 
     <bean id="sessionFactory"
