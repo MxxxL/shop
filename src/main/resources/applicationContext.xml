@@ -29,8 +29,7 @@
     <bean id="sessionFactory"
           class="org.mybatis.spring.SqlSessionFactoryBean"
           p:dataSource-ref="dataSource"
-          p:configLocation="classpath:mybatis-cfg.xml"
-          p:mapperLocations="classpath:mapper/*.xml"
+          p:mapperLocations="classpath*:mapper/UserDaoMapper.xml"
     />
 
     <!--到接口所在位置自动进行扫描，自动创建实现类,并且自动注册到spring容器当中去，名字不详(接口首字母小写)，只能采用byType的自动注入 -->
